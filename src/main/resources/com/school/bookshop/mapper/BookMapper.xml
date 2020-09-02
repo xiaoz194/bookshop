@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：命名空间，用于隔离sql，还有一个很重要的作用，后面会讲 -->
+<mapper namespace="com.school.bookshop.mapper.BookMapper">
+    <!-- id:statement的id 或者叫做sql的id-->
+    <!-- parameterType:声明输入参数的类型 -->
+    <!-- resultType:声明输出结果的类型，应该填写pojo的全路径 -->
+    <!-- #{}：输入参数的占位符，相当于jdbc的？ -->
+
+
+    <resultMap id="BooksResultMap" type="com.school.bookshop.pojo.Book">
+        <id property="id" column="id"/>
+        <result property="bookName" column="bookname"/>
+        <result property="author" column="author"/>
+        <result property="dsc" column="dsc"/>
+        <result property="pic" column="pic"/>
+        <result property="money" column="money"/>
+        <result property="collected" column="collected"/>
+        <result property="cid" column="cid"/>
+        <association property="category" javaType="com.school.bookshop.pojo.Category">
+            <id property="id" column="id"/>
+            <result property="cname" column="cname"/>
+        </association>
+    </resultMap>
+
+    <select id="cateBooks" parameterType="com.school.bookshop.pojo.Book" resultMap="BooksResultMap">
+		select * from book b,category c where b.cid = #{id} and c.id=#{id};
+	</select>
+
+
+
+    <!--查询图书 -->
+    <select id="selectAllBooks" parameterType="com.school.bookshop.pojo.Book" resultMap="BooksResultMap">
+		select * from book b,category c where b.cid = c.id;
+	</select>
+
+    <select id="selectById" parameterType="integer" resultMap="BooksResultMap">
+		select * from book b,category c where b.cid = c.id and b.id = #{id};
+	</select>
+
+    <select id="selectNameToGetId" parameterType="string" resultMap="BooksResultMap">
+		select * from book b,category c where b.cid = c.id and b.bookname = #{bookName};
+	</select>
+
+    <!-- 根据id删除一条图书信息-->
+    <delete id="deleteBookById" parameterType="integer">
+		delete from book where id = #{id};
+	</delete>
+    <!--新增一条图书信息 -->
+    <insert id="addBook"  parameterType="com.school.bookshop.pojo.Book">
+    INSERT INTO book (bookname, cid,author,dsc, pic, money) VALUES (#{bookName},#{cid},#{author},#{dsc},#{pic},#{money});
+    </insert>
+
+    <!-- 通过id查询一个管理员用户 -->
+    <select id="selectAllCategory" parameterType="com.school.bookshop.pojo.Category" resultType="com.school.bookshop.pojo.Category">
+		select * from category;
+	</select>
+
+    <!-- 删除分类 -->
+    <delete id="deleteCategory" parameterType="integer">
+    delete from category where id= #{id};
+    </delete>
+
+    <!-- 添加分类 -->
+    <insert id="addCategory"  parameterType="com.school.bookshop.pojo.Category">
+    INSERT INTO category (cname) VALUES (#{cname});
+    </insert>
+
+
+    <!--&lt;!&ndash; 通过id查询一个学生用户 &ndash;&gt;-->
+    <!--<select id="doStuLogin" parameterType="com.cqupt.job.pojo.Student" resultType="integer">-->
+		<!--select student.sid from student where username=#{username} and password = #{password};-->
+	<!--</select>-->
+
+    <!-- 通过username 模糊查询用户列表
+        #{}: 占位符
+        ${}：字符串拼接
+     -->
+    <!--<select id="findUserByUsername" parameterType="String" resultType="com.itheima.domain.User">-->
+		<!--select * from user where username like '%${value}%';-->
+	<!--</select>-->
+
+
+    <!-- 添加用户 -->
+    <!--<insert id="insertUser"  parameterType="com.itheima.domain.User">-->
+	   <!--INSERT INTO user (username,birthday,sex,address) VALUES (#{username},#{birthday},#{sex},#{address});-->
+
+	<!--</insert>-->
+
+    <!-- 更新用户 -->
+    <!--<update id="updatetUser" parameterType="com.itheima.domain.User" >-->
+		<!--update user set username=#{username} where id=#{id};-->
+	<!--</update>-->
+
+    <!-- 删除用户 -->
+    <!--<delete id="deleteUser" parameterType="integer">-->
+		<!--delete from user where id= #{id};-->
+	<!--</delete>-->
+
+</mapper>

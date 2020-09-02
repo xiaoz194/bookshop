@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Contact</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="/home/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="/home/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/home/js/move-top.js"></script>
+<script type="text/javascript" src="/home/js/easing.js"></script>
+</head>
+<body>
+  <div class="wrap">
+	  <div th:replace="common-home/head :: myheader"></div>
+ <div class="main">
+    <div class="content">
+    	<div class="section group">
+				<div class="col span_2_of_3">
+				  <div class="contact-form">
+				  	<h2>个人资料</h2>
+					    <form method="post" th:action="@{/shop/doEditPersonalInformation}">
+					    	<div>
+						    	<span><label>用户名:</label><text th:text="${lst.username}"></text> </span>
+						    </div>
+						    <div>
+						    	<span><label>密码</label></span>
+						    	<span><input name="password" id="password" type="text" class="textbox" th:value="${lst.password}"></span>
+						    </div>
+						    <div>
+						     	<span><label>收货地址</label></span>
+						    	<span><input name="address" id="address" type="text" class="textbox" th:value="${lst.address}"></span>
+						    </div>
+						    <div>
+						    	<span><label>电话</label></span>
+						    	<span><input name="tell" id="tell" type="text" class="textbox" th:value="${lst.tell}"></span>
+						    </div>
+						   <div>
+						   		<span><input type="submit" id="sub" value= "修改资料" class="myButton"></span>
+						  </div>
+					    </form>
+				  </div>
+  				</div>
+
+			  </div>		
+         </div> 
+    </div>
+ </div>
+  <div class="footer">
+
+	  <div class="copy_right">
+		  <p>Copyright &copy; 2020.Company 图书商城</p>
+	  </div>
+  </div>
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+  <script>
+	  var sub = document.getElementById("sub");
+	  sub.onclick = function () {
+	  	alert("修改成功！");
+	  }
+  </script>
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+
+</body>
+</html>
+

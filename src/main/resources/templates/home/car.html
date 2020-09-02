@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>图书商城</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="/home/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="/home/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="/home/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/home/js/move-top.js"></script>
+<script type="text/javascript" src="/home/js/easing.js"></script>
+<script type="text/javascript" src="/home/js/startstop-slider.js"></script>
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="/admin/css/bootstrap.min.css"/>
+	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+	<link rel="stylesheet" href="/admin/css/bootstrap-theme.min.css" />
+	<script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="/admin/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="wrap">
+	<div th:replace="common-home/head :: myheader"></div>
+   <div class="tlinks">Collect from <a href="http://www.cssmoban.com/" >图书商城</a></div>
+ <div class="main">
+    <div class="content">
+    	<div class="content_top">
+    		<div class="heading">
+    		<h3>我的购物车</h3>
+    		</div>
+    		<div class="clear"></div>
+    	</div>
+	      <div class="section group">
+			  <div class="list-group">
+				  <div th:each="lst:${lst}">
+					  <div class="list-group-item">
+						  <div>
+							  <span><img th:src="@{${lst.book.pic}}" width="80px;" height="80px;" /></span>
+							  书名:<sapn style="margin-right: 20px;" class="list-group-item-heading" th:text="${lst.book.bookName}"></sapn>
+						      数量：<span style="margin-right: 20px;" class="list-group-item-text" th:text="${lst.count}"></span>
+							  单价：<span style="margin-right: 20px;" class="list-group-item-text" th:text="${lst.book.money}"></span>
+							  合计：<span style="margin-right: 20px;" class="list-group-item-text" th:text="${lst.totalPrice}"></span>
+							  送至：<span style="margin-right: 20px;" class="list-group-item-text" th:text="${lst.user.address}"></span>
+							  电话：<span style="margin-right: 20%;" class="list-group-item-text" th:text="${lst.user.tell}"></span>
+							  <span style="margin-right: 20px;" class="list-group-item-text" ><a class="btn-sm btn-primary" th:href="@{/shop/deleteOrder(id=${lst.id})}">取消</a></span>
+							  <span style="margin-right: 20px;" class="list-group-item-text" ><a class="btn-sm btn-primary" th:href="@{/shop/doBuy(id=${lst.id})}">购买</a></span>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+          </div>
+</div>
+   <div class="footer">
+			<div class="copy_right">
+				<p>Copyright &copy; 2020.Company 图书商城</p>
+			</div>
+
+    </div>
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+  </div>
+</body>
+</html>
+

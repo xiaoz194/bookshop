@@ -1,0 +1,11 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<div class="col-sm-3 col-md-2 sidebar" th:fragment="mysider">
+    <ul class="nav nav-sidebar" style="margin-top: 80px">
+        <li><a th:href="@{/page/toIndex}">平台信息</a></li>
+        <li><a th:href="@{/book/category}">类别管理</a></li>
+        <li><a th:href="@{/book/info}">图书信息管理</a></li>
+        <li><a th:href="@{/user/selectAllUser}">用户管理</a></li>
+        <li><a th:href="@{/order/selectAllOrders}">订单管理</a></li>
+    </ul>
+</div>
+</html>

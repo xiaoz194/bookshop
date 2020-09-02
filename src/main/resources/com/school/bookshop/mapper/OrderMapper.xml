@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：命名空间，用于隔离sql，还有一个很重要的作用，后面会讲 -->
+<mapper namespace="com.school.bookshop.mapper.OrderMapper">
+    <!-- id:statement的id 或者叫做sql的id-->
+    <!-- parameterType:声明输入参数的类型 -->
+    <!-- resultType:声明输出结果的类型，应该填写pojo的全路径 -->
+    <!-- #{}：输入参数的占位符，相当于jdbc的？ -->
+
+
+    <resultMap id="OrderResultMap" type="com.school.bookshop.pojo.Ordr">
+        <id property="id" column="id"/>
+        <result property="bid" column="bid"/>
+        <result property="uid" column="uid"/>
+        <result property="time" column="time"/>
+        <result property="count" column="count"/>
+        <result property="flag" column="flag"/>
+        <association property="book" javaType="com.school.bookshop.pojo.Book">
+            <id property="id" column="id"/>
+            <result property="bookName" column="bookname"/>
+            <result property="pic" column="pic"/>
+            <result property="money" column="money"/>
+            <result property="desc" column="desc"/>
+        </association>
+        <association property="user" javaType="com.school.bookshop.pojo.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="address" column="address"/>
+            <result property="tell" column="tell"/>
+        </association>
+    </resultMap>
+
+    <!-- 添加分类 -->
+    <insert id="addOrdr"  parameterType="com.school.bookshop.pojo.Ordr">
+    INSERT INTO ordr (bid,uid,time,count) VALUES (#{bid},#{uid},#{time},#{count});
+    </insert>
+
+    <!--查询图书 -->
+    <select id="selectAllOrders" parameterType="com.school.bookshop.pojo.Ordr" resultMap="OrderResultMap">
+		select * from ordr o, book b, user u where o.bid = b.id and o.uid = u.id;
+	</select>
+
+    <select id="selectByUid" parameterType="integer" resultMap="OrderResultMap">
+		select * from ordr o, book b, user u where o.bid = b.id and o.uid = u.id and o.uid=#{uid};
+	</select>
+
+    <select id="selectByid" parameterType="integer" resultMap="OrderResultMap">
+		select * from ordr o, book b, user u where o.bid = b.id and o.uid = u.id and o.id=#{id};
+	</select>
+
+    <select id="selectFlag" parameterType="com.school.bookshop.pojo.Ordr" resultMap="OrderResultMap">
+		select * from ordr o, book b, user u where o.bid = b.id and o.uid = u.id and o.flag = 1 and o.uid=#{uid};
+	</select>
+
+    <select id="selectBybId" parameterType="integer" resultMap="OrderResultMap">
+        select * from ordr o, book b, user u where o.bid = b.id and o.bid = #{bid};
+	</select>
+
+
+    <!-- 更新flag -->
+    <update id="updateFlag" parameterType="integer" >
+    update ordr set flag=1 where id=#{id};
+    </update>
+
+    <!-- 根据id删除一条订单信息-->
+    <delete id="delOrdr" parameterType="integer">
+		delete from ordr where id = #{id};
+	</delete>
+    <!--新增一条图书信息 -->
+    <!--<insert id="addBook"  parameterType="com.school.bookshop.pojo.Book">-->
+    <!--INSERT INTO book (bookname, cid,author,dsc, pic, money) VALUES (#{bookName},#{cid},#{author},#{dsc},#{pic},#{money});-->
+    <!--</insert>-->
+
+    <!-- 通过id查询一个管理员用户 -->
+    <!--<select id="selectAllCategory" parameterType="com.school.bookshop.pojo.Category" resultType="com.school.bookshop.pojo.Category">-->
+		<!--select * from category;-->
+	<!--</select>-->
+
+    <!-- 删除分类 -->
+    <!--<delete id="deleteCategory" parameterType="integer">-->
+    <!--delete from category where id= #{id};-->
+    <!--</delete>-->
+
+
+    <!--&lt;!&ndash; 通过id查询一个学生用户 &ndash;&gt;-->
+    <!--<select id="doStuLogin" parameterType="com.cqupt.job.pojo.Student" resultType="integer">-->
+		<!--select student.sid from student where username=#{username} and password = #{password};-->
+	<!--</select>-->
+
+    <!-- 通过username 模糊查询用户列表
+        #{}: 占位符
+        ${}：字符串拼接
+     -->
+    <!--<select id="findUserByUsername" parameterType="String" resultType="com.itheima.domain.User">-->
+		<!--select * from user where username like '%${value}%';-->
+	<!--</select>-->
+
+
+    <!-- 添加用户 -->
+    <!--<insert id="insertUser"  parameterType="com.itheima.domain.User">-->
+	   <!--INSERT INTO user (username,birthday,sex,address) VALUES (#{username},#{birthday},#{sex},#{address});-->
+
+	<!--</insert>-->
+
+    <!-- 更新用户 -->
+    <!--<update id="updatetUser" parameterType="com.itheima.domain.User" >-->
+		<!--update user set username=#{username} where id=#{id};-->
+	<!--</update>-->
+
+    <!-- 删除用户 -->
+    <!--<delete id="deleteUser" parameterType="integer">-->
+		<!--delete from user where id= #{id};-->
+	<!--</delete>-->
+
+</mapper>

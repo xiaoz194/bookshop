@@ -1,0 +1,76 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+<div class="header" th:fragment="myheader">
+    <div class="headertop_desc">
+        <div class="call">
+            <p><span>小叮当图书在线交易商城</span> 请联系我们~ <span class="number">1-22-3456789</span></span></p>
+        </div>
+        <div class="account_desc">
+            <ul>
+                <li><a th:unless="${flag}" th:href="@{/page/toReg}">注册</a></li>
+                <li><a th:unless="${flag}" th:href="@{/page/toHomeLogin}">登录</a></li>
+                <li><a th:if="${flag}" th:href="@{/shop/userLogout}">登出</a></li>
+                <li><a th:if="${flag}" th:href="@{/shop/center}">个人中心</a></li>
+                <li><a th:href="@{/shop/toCar}">购物车</a></li>
+                <li><a th:href="@{/shop/toMyOrdr}">订单</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="header_top">
+        <div class="logo">
+            <a href="index.html"><img src="/home/images/logo.png" alt="" /></a>
+        </div>
+        <div class="cart">
+            <p>欢迎来到在线图书商城！ <span>Cart:</span><div id="dd" class="wrapper-dropdown-2">你想要的都有哦~
+            </div></p>
+        </div>
+        <script type="text/javascript">
+            function DropDown(el) {
+                this.dd = el;
+                this.initEvents();
+            }
+            DropDown.prototype = {
+                initEvents : function() {
+                    var obj = this;
+
+                    obj.dd.on('click', function(event){
+                        $(this).toggleClass('active');
+                        event.stopPropagation();
+                    });
+                }
+            }
+
+            $(function() {
+
+                var dd = new DropDown( $('#dd') );
+
+                $(document).click(function() {
+                    // all dropdowns
+                    $('.wrapper-dropdown-2').removeClass('active');
+                });
+
+            });
+
+        </script>
+        <div class="clear"></div>
+    </div>
+    <div class="header_bottom">
+        <div class="menu">
+            <ul>
+                <li class="active"><a th:href="@{/shop/toHomeIndex}">主页</a></li>
+                <li th:each="cate:${cate}"><a th:href="@{/book/refresh(id = ${cate.id})}" th:text="${cate.cname}"></a></li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="search_box">
+            <form method="post" th:action="@{/shop/search}">
+                <input type="text" value="Search" name="bookName" id="bookName">
+                <button type="submit" class="btn-sm btn-success">搜索</button>
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</div>
+
+</html>
